@@ -1,6 +1,7 @@
 package com.prystupa
 
 import akka.actor.Actor
+import akka.event.Logging
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,10 +19,11 @@ object Greeter {
 }
 
 class Greeter extends Actor {
+  val log = Logging(context.system, this)
 
   override def receive: Receive = {
     case Greeter.Greet =>
-      println("Hello World")
+      log.info("Hello World")
       sender ! Greeter.Done
   }
 }
