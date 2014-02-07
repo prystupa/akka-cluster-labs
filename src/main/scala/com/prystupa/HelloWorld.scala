@@ -7,6 +7,8 @@ class HelloWorld extends Actor {
   override def preStart(): Unit = {
     // create the greeter actor
     val greeter = context.actorOf(Props[Greeter], "greeter")
+    // send unsupported message
+    greeter ! "Bye"
     // tell it to perform the greeting
     greeter ! Greeter.Greet
   }
