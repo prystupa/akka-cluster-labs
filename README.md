@@ -13,7 +13,7 @@ Frmework features:
 ## Clone
 First use [git](http://git-scm.com/) to clone this repo:
 
-    git clone ???
+    git clone https://github.com/prystupa/akka-cluster-service-locator.git
     cd akka-cluster-service-locator
 
 ## Build
