@@ -38,6 +38,11 @@
             <artifactId>akka-dataflow_${scala.short.version}</artifactId>
             <version>${akka.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-cluster_${scala.short.version}</artifactId>
+            <version>${akka.version}</version>
+        </dependency>
 
         <!-- logback -->
         <dependency>

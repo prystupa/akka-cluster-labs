@@ -20,5 +20,6 @@ class HelloDataflow extends Actor {
 
   override def receive: Receive = {
     case r: String => log.info(r)
+    context.stop(self)
   }
 }
