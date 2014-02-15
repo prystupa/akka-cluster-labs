@@ -12,3 +12,9 @@ import akka.actor.ActorRef
 case object DiscoverServicesRequest
 
 case class ServiceRegistration(service: ActorRef, metadata: String)
+
+case class ServiceRequest(payload: String)
+
+case class ServiceReply(payload: String)
+
+case class LocateServiceRequest(service: String)

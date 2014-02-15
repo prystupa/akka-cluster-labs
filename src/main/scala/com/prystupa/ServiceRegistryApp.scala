@@ -4,9 +4,7 @@ import akka.actor._
 import akka.cluster.ClusterEvent._
 import akka.cluster.{MemberStatus, Member, Cluster}
 import akka.cluster.ClusterEvent.CurrentClusterState
-import akka.cluster.ClusterEvent.MemberRemoved
 import akka.cluster.ClusterEvent.MemberUp
-import akka.cluster.ClusterEvent.UnreachableMember
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,17 +16,17 @@ object ServiceRegistryApp extends App {
   System.setProperty("akka.remote.netty.tcp.port", "2551")
 
   val system = ActorSystem("ClusterSystem")
-  val clusterListener = system.actorOf(Props[ServiceRegistryActor], name = "serviceRegistry")
+  val serviceRegistry = system.actorOf(Props[ServiceRegistryActor], name = "serviceRegistry")
   val cluster = Cluster(system)
 
   cluster registerOnMemberUp {
-    cluster.subscribe(clusterListener, classOf[ClusterDomainEvent])
+    cluster.subscribe(serviceRegistry, classOf[ClusterDomainEvent])
   }
 }
 
 class ServiceRegistryActor extends Actor with ActorLogging {
 
-  var services: List[ActorRef] = Nil
+  var services: Map[String, ActorRef] = Map()
 
   override def receive: Receive = {
 
@@ -45,13 +43,16 @@ class ServiceRegistryActor extends Actor with ActorLogging {
     case msg@ServiceRegistration(service, metadata) => {
       log.info("Received service registration info: {}", msg)
       context.watch(service)
-      services = service :: services
+      services = services updated(metadata, service)
+      log.info("Current registered services: {}", services.mkString(", "))
     }
+
+    case LocateServiceRequest(service) => sender ! services.get(service)
 
     case Terminated(service) => {
       log.info("Notified of registered endpoint termination, un-registering: {}", service)
       services = services.filterNot(_ == service)
-      log.info("Remaining registered services: {}", services)
+      log.info("Remaining registered services: {}", services.mkString(", "))
     }
 
     case other => log.warning("Unexpected message received: {}", other)
