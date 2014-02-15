@@ -33,7 +33,7 @@ The above will build the prototype and run all unit tests.
     mvn exec:java -Dexec.mainClass="com.prystupa.ServiceClientApp"
 
 ## Explore
-* Monitor the logs output to the console by each applications
+* Monitor the logs output to the console by each application
 * Try bringing registry down and then back
 * Try bringing service provider down and then back
 * Try calling client when service provider is down
