@@ -51,7 +51,7 @@ class ServiceRegistryActor extends Actor with ActorLogging {
 
     case Terminated(service) => {
       log.info("Notified of registered endpoint termination, un-registering: {}", service)
-      services = services.filterNot(_ == service)
+      services = services.filterNot(_._2 == service)
       log.info("Remaining registered services: {}", services.mkString(", "))
     }
 

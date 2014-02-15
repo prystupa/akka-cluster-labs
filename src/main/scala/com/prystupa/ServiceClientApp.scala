@@ -23,14 +23,18 @@ object ServiceClientApp extends App {
 
   import system.dispatcher
 
+  println("Locating serviceA...")
   serviceRegistry ask LocateServiceRequest("serviceA") onComplete {
     case Success(Some(service: ActorRef)) => {
-      println("received service for serviceA: {}", service)
-      service ask ServiceRequest("ABC") onSuccess {
-        case reply => println("Received reply from serviceA: {}", reply)
+      println("    found serviceA: {}", service)
+      println("Sending request to serviceA: {}...", "ABC")
+      service ask ServiceRequest("ABC") onComplete {
+        case Success(reply) => println("    received reply from serviceA: {}", reply)
+        case Failure(x) => println("    request to serviceA failed with: {}", x)
       }
     }
-    case Success(other) => println("unexpected reply from service locator", other)
-    case Failure(x) => println("request to serviceA failed with: {}", x)
+    case Success(None) => println("    could not locate serviceA")
+    case Success(other) => println("    unexpected reply from service locator", other)
+    case Failure(x) => println("    locating serviceA failed with: {}", x)
   }
 }
