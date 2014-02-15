@@ -13,7 +13,7 @@ Frmework features:
 ## Clone
 First use [git](http://git-scm.com/) to clone this repo:
 
-    git clone {TODO: add stash URL}
+    git clone ???
     cd akka-cluster-service-locator
 
 ## Build
@@ -24,15 +24,13 @@ UMF is built with [Maven](http://maven.apache.org/).
 The above will build the prototype and run all unit tests.
 
 ## Run service locator (open new Terminal tab)
-    mvn exec:java -DmainClass=com.prystupa.ServiceRegistryApp
+    mvn exec:java -Dexec.mainClass="com.prystupa.ServiceRegistryApp"
 
-## Run Bridge services (open new Terminal tab)
-    cd quickfixj-bridge
-    mvn exec:java
+## Run service provider (open new Terminal tab)
+    mvn exec:java -Dexec.mainClass="com.prystupa.ServiceProviderApp"
 
-## Run Venue services (open new Terminal tab)
-    cd quickfixj-venue
-    mvn exec:java
+## Run service client (open new Terminal tab)
+    mvn exec:java -Dexec.mainClass="com.prystupa.ServiceClientApp"
 
 ## Explore
 * Monitor the logs output to the console by each applications
