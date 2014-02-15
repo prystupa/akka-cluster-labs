@@ -17,7 +17,7 @@ First use [git](http://git-scm.com/) to clone this repo:
     cd akka-cluster-service-locator
 
 ## Build
-UMF is built with [Maven](http://maven.apache.org/).
+POC is built with [Maven](http://maven.apache.org/).
 
     mvn clean install
 
